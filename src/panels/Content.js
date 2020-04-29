@@ -1,21 +1,38 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
+import InfiniteLoading from 'react-simple-infinite-loading';
+import './style.css';
 
 import PhotoElement from './PhotoElement';
 
-class Content extends  React.Component {
-    constructor(props) {
-        super(props);
+const Content = (props) => {
+    const [listItems, setListItems] = useState(Array.from(Array(30).keys(), x => "https://klike.net/uploads/posts/2019-06/1560664221_1.jpg"));
+    const [isFetching, setIsFetching] = useState(true);
+
+    function fetchMoreListItems() {
+        setTimeout(() => {
+            setListItems(prevState => ([...prevState, ...Array.from(Array(20).keys(), x => "https://klike.net/uploads/posts/2019-06/1560664221_1.jpg")]));
+            setIsFetching(true);
+        }, 2000);
     }
 
-    render() {
-        return(
-            <div>
-                <PhotoElement user={this.props.user} url="https://lh3.googleusercontent.com/proxy/2bildWPkczhmE3dUfbigivdstRFKTai5ku28zGLoE0BKwhZNPmX4CL7nBvkNT8pKf8jPdGvDXIVmNIuua3mbvcY13pi_QN8O5ntR-3a7VfQIxoJMEeyUwdPR-wddf_21"/>
-                <PhotoElement user={this.props.user} url="https://i.pinimg.com/736x/2d/dc/25/2ddc25914e2ae0db5311ffa41781dda1.jpg"/>
-                <PhotoElement user={this.props.user} url="https://klike.net/uploads/posts/2019-06/1560664221_1.jpg"/>
-            </div>
-        );
-    }
+
+    return (
+        <div className="max-width-height">
+            <InfiniteLoading
+                itemHeight={300}
+                hasMoreItems={isFetching}
+                loadMoreItems={fetchMoreListItems}
+            >
+                {listItems.map(
+                    (item, index) =>
+                        <PhotoElement user={props.user} url={item} key={index}/>
+                        )
+                }
+
+            </InfiniteLoading>
+        </div>
+    );
 }
 
 export default Content;

@@ -1,0 +1,4 @@
+.max-width-height {
+    width: 100vw;
+    height: calc(100vh - 105px);
+}
