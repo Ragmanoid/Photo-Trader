@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {
     Group,
@@ -10,21 +10,40 @@ import {
 
 import './PhotoElement.css';
 
-const PhotoElement = (props) => {
-    const user = props.user;
+const PhotoElement = ({url, buy, author, price, download}) => {
 
     var sectionStyle = {
-        backgroundImage: `url(${props.url})`
+        backgroundImage: `url(${url})`
     };
+
+    const downloadImage = () => {
+        window.open(url);
+    }
+
 
     return (
         <div>
-            <Group separator="hide" header={<Header mode="secondary">Автор: Лапин Мхаил</Header>}>
+            <Group separator="hide" header={<Header mode="secondary">Автор: {author} цена: {price}</Header>}>
                 <CardGrid>
                     <Card size="l" mode="outline">
                         <center>
-                            <div className="photo" style={sectionStyle} />
-                            <Button size="xl" mode="secondary">Купить</Button>
+                            <div className="photo" style={sectionStyle}/>
+                            {
+                                download &&
+                                <Button
+                                    size="xl"
+                                    mode="secondary"
+                                    onClick={downloadImage}
+                                >Скачать</Button>
+                                ||
+                                <Button
+                                    size="xl"
+                                    mode="secondary"
+                                    onClick={buy}
+                                    data-price={price}
+                                    data-author={author}
+                                    data-img={url}
+                                >Купить</Button>}
                         </center>
                     </Card>
                 </CardGrid>

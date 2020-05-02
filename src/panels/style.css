@@ -2,3 +2,16 @@
     width: 100vw;
     height: calc(100vh - 105px);
 }
+
+.toTop {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+}
+
+.photo {
+    background-size: cover;
+    background-position: center;
+    height: 210px;
+    background-repeat: no-repeat;
+}
